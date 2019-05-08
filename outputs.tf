@@ -1,3 +1,3 @@
-output "arn" {
-  value = "${aws_sns_topic.topic.arn}"
+output "name" {
+  value = "${google_pubsub_topic.topic.name}"
 }

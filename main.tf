@@ -1,3 +1,3 @@
-resource "aws_sns_topic" "topic" {
+resource "google_pubsub_topic" "topic" {
   name = "hedwig-${var.topic}"
 }
