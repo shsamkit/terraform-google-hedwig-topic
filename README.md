@@ -26,6 +26,10 @@ Naming convention - lowercase alphanumeric and dashes only.
 Please note Google's restrictions (if not followed, errors may be confusing and often totally wrong):
 - [Resource names](https://cloud.google.com/pubsub/docs/admin#resource_names) 
 
+Note that if you're using Terraform to create the Dataflow output GCS bucket, then ensure that permissions for
+the bucket include `Storage Legacy Object Owner` or `Storage Object Admin`. This is done by default if using
+Google Console, but not for Terraform.
+
 The Pub/Sub topic name will be prefixed by `hedwig-`.
 
 ## Release Notes
