@@ -26,9 +26,31 @@ Naming convention - lowercase alphanumeric and dashes only.
 Please note Google's restrictions (if not followed, errors may be confusing and often totally wrong):
 - [Resource names](https://cloud.google.com/pubsub/docs/admin#resource_names) 
 
-Note that if you're using Terraform to create the Dataflow output GCS bucket, then ensure that permissions for
-the bucket include `Storage Legacy Object Owner` or `Storage Object Admin`. This is done by default if using
-Google Console, but not for Terraform.
+## Caveats
+
+### IAM
+
+If you're using Terraform to create the Dataflow output GCS bucket, then ensure that permissions for the bucket 
+include `Storage Legacy Object Owner` or `Storage Object Admin`. This is done by default if using
+Google Console, but not for Terraform. This can be done in Terraform like so:
+
+```hcl
+data google_project current {}
+
+resource "google_storage_bucket_iam_member" "hedwig_firehose_editor_iam" {
+  bucket = "${google_storage_bucket.hedwig_firehose.name}"
+  role   = "roles/storage.admin"
+  member = "projectEditor:${data.google_project.current.id}"
+}
+
+resource "google_storage_bucket_iam_member" "hedwig_firehose_owner_iam" {
+  bucket = "${google_storage_bucket.hedwig_firehose.name}"
+  role   = "roles/storage.admin"
+  member = "projectOwner:${data.google_project.current.id}"
+}
+```
+
+Alternatively, you can restrict these permissions to the user Dataflow uses, which is: `{project number}-compute@developer.gserviceaccount.com`.
 
 The Pub/Sub topic name will be prefixed by `hedwig-`.
 
