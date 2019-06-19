@@ -11,7 +11,8 @@ resource "google_dataflow_job" "firehose" {
   temp_gcs_location = "${var.dataflow_tmp_gcs_location}"
   template_gcs_path = "${var.dataflow_template_gcs_path}"
 
-  zone = "${var.dataflow_zone}"
+  zone   = "${var.dataflow_zone}"
+  region = "${var.dataflow_region}"
 
   parameters = {
     inputTopic           = "projects/${data.google_client_config.current.project}/topics/${google_pubsub_topic.topic.name}"

@@ -18,7 +18,12 @@ variable "dataflow_template_gcs_path" {
 }
 
 variable "dataflow_zone" {
-  description = "The zone to use for Dataflow. This may be required if it's not set at the provider level, or that zone doesn't support Dataflow"
+  description = "The zone to use for Dataflow. This may be required if it's not set at the provider level, or that zone doesn't support Dataflow regional endpoints (see https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)"
+  default     = ""
+}
+
+variable "dataflow_region" {
+  description = "The region to use for Dataflow. This may be required if it's not set at the provider level, or you want to use a region different from the zone (see https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)"
   default     = ""
 }
 
