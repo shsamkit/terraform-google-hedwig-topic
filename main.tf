@@ -11,6 +11,11 @@ resource "google_dataflow_job" "firehose" {
   temp_gcs_location = "${var.dataflow_tmp_gcs_location}"
   template_gcs_path = "${var.dataflow_template_gcs_path}"
 
+  lifecycle {
+    # Google templates add their own labels so ignore changes
+    ignore_changes = ["labels"]
+  }
+
   zone   = "${var.dataflow_zone}"
   region = "${var.dataflow_region}"
 
