@@ -36,3 +36,9 @@ variable "dataflow_output_filename_prefix" {
   description = "Filename prefix for output files by Google Dataflow (defaults to subscription name)"
   default     = ""
 }
+
+variable "iam_service_accounts" {
+  description = "The list of IAM service accounts to create exclusive IAM permissions for the topic"
+  default     = []
+  type        = "list"
+}

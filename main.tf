@@ -2,6 +2,30 @@ resource "google_pubsub_topic" "topic" {
   name = "hedwig-${var.topic}"
 }
 
+locals {
+  iam_service_accounts = "${formatlist("serviceAccount:%s", var.iam_service_accounts)}"
+}
+
+data "google_iam_policy" "topic_policy" {
+  binding {
+    members = "${local.iam_service_accounts}"
+    role    = "roles/pubsub.publisher"
+  }
+
+  binding {
+    members = "${local.iam_service_accounts}"
+    role    = "roles/pubsub.viewer"
+  }
+}
+
+resource "google_pubsub_topic_iam_policy" "topic_policy" {
+  count = "${length(var.iam_service_accounts) == 0 ? 0 : 1}"
+
+  policy_data = "${data.google_iam_policy.topic_policy.policy_data}"
+  topic       = "${google_pubsub_topic.topic.name}"
+}
+
+
 data "google_client_config" "current" {}
 
 resource "google_dataflow_job" "firehose" {
