@@ -38,7 +38,7 @@ variable "dataflow_output_filename_prefix" {
 }
 
 variable "iam_service_accounts" {
-  description = "The list of IAM service accounts to create exclusive IAM permissions for the topic"
+  description = "The list of IAM service accounts to create exclusive IAM permissions for the topic. Flattens a list of list if necessary."
   default     = []
   type        = "list"
 }

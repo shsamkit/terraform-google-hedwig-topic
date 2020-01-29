@@ -3,7 +3,7 @@ resource "google_pubsub_topic" "topic" {
 }
 
 locals {
-  iam_service_accounts = "${formatlist("serviceAccount:%s", var.iam_service_accounts)}"
+  iam_service_accounts = "${formatlist("serviceAccount:%s", flatten(var.iam_service_accounts))}"
 }
 
 data "google_iam_policy" "topic_policy" {
