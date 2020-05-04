@@ -4,7 +4,8 @@ variable "topic" {
 
 variable "enable_firehose_all_messages" {
   description = "Should all messages published to this topic be firehosed into Cloud Storage"
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "dataflow_tmp_gcs_location" {
@@ -39,5 +40,27 @@ variable "dataflow_output_filename_prefix" {
 
 variable "iam_service_accounts" {
   description = "The list of IAM service accounts to create exclusive IAM permissions for the topic. Flattens a list of list if necessary."
+  default     = []
+}
+
+variable "enable_alerts" {
+  description = "Should alerting be generated?"
+  type        = bool
+  default     = false
+}
+
+variable "alerting_project" {
+  description = "The project where alerting resources should be created (defaults to current project)"
+  default     = ""
+}
+
+variable "dataflow_freshness_alert_threshold" {
+  description = "Threshold for alerting on Dataflow freshness in seconds"
+  default     = 1800 # 30 mins
+}
+
+variable "dataflow_freshness_alert_notification_channels" {
+  description = "Stackdriver Notification Channels for dataflow alarm for freshness (required if alerting is on)"
+  type        = list(string)
   default     = []
 }
